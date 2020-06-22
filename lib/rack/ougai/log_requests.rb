@@ -19,7 +19,7 @@ module Rack
 
       private
 
-      def create_log(start_time, env, status, _headers)
+      def create_log(start_time, env, status, headers)
         end_time = Time.now
 
         ret = {
@@ -34,6 +34,8 @@ module Rack
 
         request_id = env['HTTP_X_REQUEST_ID']
         ret[:request_id] = request_id unless request_id.nil?
+        api_version = headers['Content-Version']
+        ret[:api_version] = api_version unless api_version.nil?
 
         ret
       end
